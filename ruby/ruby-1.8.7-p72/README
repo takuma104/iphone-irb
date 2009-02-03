@@ -13,7 +13,7 @@ $ make
 make後、エラーで止る場合があるようですので、その場合の対処。
 
 fake.rb で止る場合
-$ cat /dev/null > hoge
+$ cat /dev/null > fake.rb
 $ make
 
 archive has no table of contents で止る場合
