@@ -1,0 +1,24 @@
+ruby-1.8.7-p72のiPhone用Build方法
+
+$ wget http://ftp.iij.ad.jp/pub/lang/ruby/1.8/ruby-1.8.7-p72.tar.bz2
+
+tarballと同じフォルダに、patch-for-iphone-ruby-1.8.7-p72, build.sh, extranlib を配置
+
+$ tar xvjf ruby-1.8.7-p72.tar.bz2
+$ cd ruby-1.8.7-p72
+$ patch -p1 -d . < ../patch-for-iphone-ruby-1.8.7-p72 
+$ sh ../build.sh 
+$ make
+
+make後、エラーで止る場合があるようですので、その場合の対処。
+
+fake.rb で止る場合
+$ cat /dev/null > hoge
+$ make
+
+archive has no table of contents で止る場合
+$ sh ../extranlib.sh
+$ make
+
+これで ruby-1.8.7-p72 ディレクトリに libruby-static.a ができるはずです。
+

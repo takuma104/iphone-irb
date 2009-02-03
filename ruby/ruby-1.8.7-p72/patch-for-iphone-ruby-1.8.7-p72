@@ -1,0 +1,148 @@
+diff -c -r ruby-1.8.7-p72/eval.c ruby-1.8.7-p72_iphone/eval.c
+*** ruby-1.8.7-p72/eval.c	2008-08-04 12:24:26.000000000 +0900
+--- ruby-1.8.7-p72_iphone/eval.c	2009-02-03 21:23:35.000000000 +0900
+***************
+*** 33,41 ****
+  #include "st.h"
+  #include "dln.h"
+  
+! #ifdef __APPLE__
+! #include <crt_externs.h>
+! #endif
+  
+  /* Make alloca work the best possible way.  */
+  #ifdef __GNUC__
+--- 33,41 ----
+  #include "st.h"
+  #include "dln.h"
+  
+! //#ifdef __APPLE__
+! //#include <crt_externs.h>
+! //#endif
+  
+  /* Make alloca work the best possible way.  */
+  #ifdef __GNUC__
+***************
+*** 1378,1388 ****
+      ruby_frame = top_frame = &frame;
+      ruby_iter = &iter;
+  
+! #ifdef __MACOS__
+      rb_origenviron = 0;
+! #else
+!     rb_origenviron = environ;
+! #endif
+  
+      Init_stack((void*)&state);
+      Init_heap();
+--- 1378,1388 ----
+      ruby_frame = top_frame = &frame;
+      ruby_iter = &iter;
+  
+! //#ifdef __MACOS__
+      rb_origenviron = 0;
+! //#else
+! //    rb_origenviron = environ;
+! //#endif
+  
+      Init_stack((void*)&state);
+      Init_heap();
+diff -c -r ruby-1.8.7-p72/ext/extmk.rb ruby-1.8.7-p72_iphone/ext/extmk.rb
+*** ruby-1.8.7-p72/ext/extmk.rb	2008-05-23 14:22:13.000000000 +0900
+--- ruby-1.8.7-p72_iphone/ext/extmk.rb	2009-02-03 21:25:56.000000000 +0900
+***************
+*** 354,360 ****
+  else
+    $ruby = '$(topdir)/miniruby' + EXEEXT
+  end
+! $ruby << " -I'$(topdir)'"
+  unless CROSS_COMPILING
+    $ruby << " -I'$(top_srcdir)/lib'"
+    $ruby << " -I'$(extout)/$(arch)' -I'$(extout)/common'" if $extout
+--- 354,360 ----
+  else
+    $ruby = '$(topdir)/miniruby' + EXEEXT
+  end
+! #$ruby << " -I'$(topdir)'"
+  unless CROSS_COMPILING
+    $ruby << " -I'$(top_srcdir)/lib'"
+    $ruby << " -I'$(extout)/$(arch)' -I'$(extout)/common'" if $extout
+diff -c -r ruby-1.8.7-p72/ext/socket/socket.c ruby-1.8.7-p72_iphone/ext/socket/socket.c
+*** ruby-1.8.7-p72/ext/socket/socket.c	2008-04-15 12:35:55.000000000 +0900
+--- ruby-1.8.7-p72_iphone/ext/socket/socket.c	2009-02-03 21:26:44.000000000 +0900
+***************
+*** 33,41 ****
+  # define pseudo_AF_FTIP pseudo_AF_RTIP	/* workaround for NetBSD and etc. */
+  #endif
+  #include <netinet/in.h>
+- #ifdef HAVE_NETINET_IN_SYSTM_H
+- # include <netinet/in_systm.h>
+- #endif
+  #ifdef HAVE_NETINET_TCP_H
+  # include <netinet/tcp.h>
+  #endif
+--- 33,38 ----
+diff -c -r ruby-1.8.7-p72/hash.c ruby-1.8.7-p72_iphone/hash.c
+*** ruby-1.8.7-p72/hash.c	2008-06-09 03:25:01.000000000 +0900
+--- ruby-1.8.7-p72_iphone/hash.c	2009-02-03 21:23:35.000000000 +0900
+***************
+*** 17,25 ****
+  #include "util.h"
+  #include "rubysig.h"
+  
+! #ifdef __APPLE__
+! #include <crt_externs.h>
+! #endif
+  
+  #define HASH_DELETED  FL_USER1
+  #define HASH_PROC_DEFAULT FL_USER2
+--- 17,25 ----
+  #include "util.h"
+  #include "rubysig.h"
+  
+! //#ifdef __APPLE__
+! //#include <crt_externs.h>
+! //#endif
+  
+  #define HASH_DELETED  FL_USER1
+  #define HASH_PROC_DEFAULT FL_USER2
+***************
+*** 1772,1778 ****
+  static int path_tainted = -1;
+  
+  static char **origenviron;
+! #ifdef _WIN32
+  #define GET_ENVIRON(e) (e = rb_w32_get_environ())
+  #define FREE_ENVIRON(e) rb_w32_free_environ(e)
+  static char **my_environ;
+--- 1772,1778 ----
+  static int path_tainted = -1;
+  
+  static char **origenviron;
+! /*#ifdef _WIN32
+  #define GET_ENVIRON(e) (e = rb_w32_get_environ())
+  #define FREE_ENVIRON(e) rb_w32_free_environ(e)
+  static char **my_environ;
+***************
+*** 1784,1793 ****
+  #define GET_ENVIRON(e) (e)
+  #define FREE_ENVIRON(e)
+  #else
+! extern char **environ;
+  #define GET_ENVIRON(e) (e)
+  #define FREE_ENVIRON(e)
+! #endif
+  
+  static VALUE
+  env_str_new(ptr, len)
+--- 1784,1793 ----
+  #define GET_ENVIRON(e) (e)
+  #define FREE_ENVIRON(e)
+  #else
+! */extern char **environ;
+  #define GET_ENVIRON(e) (e)
+  #define FREE_ENVIRON(e)
+! //#endif
+  
+  static VALUE
+  env_str_new(ptr, len)
